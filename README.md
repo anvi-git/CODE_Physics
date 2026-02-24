@@ -3,6 +3,7 @@
 ## Overview
 
 This project analyzes galaxy clusters using X-ray observations to study the Baryonic Tully-Fisher Relation (BTFR) and test theories of modified gravity. The analysis applies Markov Chain Monte Carlo (MCMC) methods to fit gravitational permittivity parameters and study the mass-velocity relationship in galaxy clusters.
+This project was contained in my Master's Thesis in Physics discussed in April 2024, which you can consult [here](Master_s_Thesis.pdf).
 
 ## Project Description
 
@@ -21,6 +22,7 @@ The analysis uses data from:
 - Two main datasets available:
   - 99 clusters (full dataset): `dati_finali_99/`
   - 75 clusters (purged dataset with lower temperature uncertainty): `data_75/`
+For more information on the dataset, you can consult my [thesis](Master_s_Thesis.pdf).
 
 ### Input Data Structure
 
@@ -191,8 +193,8 @@ getdist      # Corner plots and posterior analysis
 
 ### Basic Run
 
-1. Open `afreshstart.ipynb`
-2. Set your configuration parameters (cells 3-4)
+1. Open `notebook.ipynb`
+2. Set your configuration parameters in the **Run Configuration** cell (cell 4)
 3. Run all cells sequentially
 
 ### Typical Configuration
@@ -214,6 +216,72 @@ w = 1.0
 ANALYSIS = 1
 NPARAMS = 3
 ```
+
+## Notebook Walkthrough
+
+The notebook (`notebook.ipynb`) is fully documented with markdown cells between every code cell. Below is a quick-reference guide to each step — what it takes as input, and what it produces as output.
+
+| # | Step | Input | Output |
+|---|------|-------|--------|
+| 1 | **Library Imports** | — | All packages in memory (`numpy`, `scipy`, `emcee`, `pandas`, `getdist`, …) |
+| 2 | **Run Configuration** | User-edited constants (`N_CLUSTERS`, `TEST`, `w`, `ANALYSIS`, `NPARAMS`) | Config DataFrame; scalar run variables; `DPI`, `nwalkers`, `niter`, `nburnin` |
+| 3 | **Plot Style and Color Configuration** | `ANALYSIS`, `NPARAMS` | `color_chain`, `color_cornerplot` for MCMC figures |
+| 4 | **Physical Constants** | Hard-coded values | `constants_df` DataFrame; scalars `G`, `a₀`, `μ`, `m_p`, `c`, `Λ`, … |
+| 5 | **Literature Reference Parameters** | Cesare et al. (2020, 2022) | `params_df`; scalars `Ell_eps0`, `Disk_eps0`, `Ell_rhoc`, `Ell_Q`, `slope_BTFR`, … |
+| 6 | **Observational Data Loading** | `.txt` files in `in/data_clusters_general/` | Arrays `L`, `R`, `T`, `v_disp`, `z`, `names` with their uncertainties |
+| 7 | **Output Directory Setup** | Timestamp | Timestamped `out/run_*/` folder tree; path variables |
+| 8 | **Results and Configuration File Initialization** | Config variables | `config.txt`, `results_recap.txt`; helper `log_result()` |
+| 9 | **Baryonic Mass Calculation** | `L`, `T`, `R`, uncertainties, `w` | `Mass_SM` [M☉], `sigma_Mass_SM`, `rel_err_mass` |
+| 10 | **Mass Statistics Summary** | `Mass_SM` | Printed min/max/mean/median; section in `results_recap.txt` |
+| 11 | **Beta Parameter Calculation** | `v_disp`, `T`, constants | `beta` array [dimensionless]; `mean_beta` |
+| 12 | **Central Mass Density (β-Model Normalization)** | `R`, `beta`, `Mass_SM`, `w`, `r_scale` | `rho_0_SI` [g/cm³] — β-model central density per cluster |
+| 13 | **Non-Isothermal Model (Currently Disabled)** | *(commented out — not used in the thesis)* | *(disabled — see cell comments for T-gradient extension)* |
+| 14 | **Radial Mass, Density, and Potential Profiles** | `rho_0_SI`, `beta`, `r_scale` | 2-D arrays `Massa_r`, `density_r_…`, `phi`; `probed_mass`; `rho_0_astro_units` |
+| 15 | **Gravitational Profiles: Potential, Acceleration, and Velocity** | `phi`, `Massa_r`, `r` | Inline plots: φ(r), \|g(r)\|, V_c(r); arrays `m`, `u`, `p`, `gravpot`, `accel`, `velocity`, `g_newton` |
+| 16 | **Gravitational Acceleration — Newtonian Comparison** | `accel`, `g_newton`, `r` | Inline plot: effective vs Newtonian acceleration |
+| 17 | **Cumulative Mass and Density Profile Plots (Saved)** | `m`, `u`, `p`, `r` | `mass_profile.png`, `mass_density_profile.png` → `plots/profiles/` |
+| 18 | **Density at R₅₀₀** | `rho_0_astro_units`, `R`, `beta` | `density_500_SI_units_log_10` [log₁₀ g/cm³] — input to ε(ρ) |
+| 19 | **BTFR Input: Circular Velocity and Mass Arrays** | `v_disp`, masses, `ANALYSIS` | `v`, `Mass`, `error_v`, `error_Mass` in log₁₀ space |
+| 20 | **Baryonic Tully–Fisher Relation (BTFR) Plot** | `v`, `Mass`, errors | `Mbar_vs_Vc_with_mass_value.png` → `plots/histograms/` |
+| 21 | **Temperature vs. Velocity Dispersion Scatter Plot** | `T`, `v_disp`, errors | `T_v_disp.png` → `plots/mass_velocity/` |
+| 22 | **Load External Reference Data** | `data_titos/*.txt` | `v_titos`, `m_titos` (log-space) |
+| 23 | **Observational Data Histograms** | `z`, `L`, `T`, `v_disp`, `R`, `Mass_SM`, `beta` | 7 PNGs → `plots/histograms/` |
+| 24 | **Package Data into MCMC Input Arrays** | `v`, `Mass`, errors | `X`, `Y`, `error`, `data` tuple |
+| 25 | **MCMC Hyperparameter Summary** | `nwalkers`, `niter`, `nburnin` | Printed summary |
+| 26 | **MOND Normalization Constant** | `G`, `a₀`, `PC` | `Gb`, `a` = log₁₀(G·a₀) |
+| 27 | **MCMC: Model Definition, Priors, Likelihood, and Sampling** | `data`, model functions, priors | `sampler`, `samples`, `best_fit_parameters`; chain/autocorr/corner plots → `plots/mcmc/` |
+| 28 | **Parameter Comparison with Literature** | Fitted means, reference params | Printed σ-level differences for each parameter |
+| 29 | **MCMC Results Logging** | All MCMC outputs | MCMC section appended to `results_recap.txt` |
+| 30 | **Gravitational Permittivity Function Plot** | Hard-coded Q, ε₀, ρ_c values | Inline plot of gravitational permittivity function with literature curves |
+
+### Example: Minimal Test Run
+
+Open `notebook.ipynb`, set the following in cell 2, then run all cells in order:
+
+```python
+N_CLUSTERS = 75   # purged dataset (recommended)
+TEST       = 0    # fast mode: 100 walkers, 10 000 iterations
+w          = 1.0  # hot gas only
+ANALYSIS   = 0    # fit ε₀ and BTFR slope α
+NPARAMS    = 2    # two free parameters
+```
+
+**What happens:**
+1. Steps 1–8 load libraries, configure the run, set constants, load data, and create output directories.
+2. Steps 9–14 compute baryonic masses, β parameters, and cluster density profiles.
+3. Steps 15–23 produce all exploratory visualisations (profiles, BTFR scatter, T–σᵥ, histograms).
+4. Steps 24–27 package data and run the MCMC sampler with convergence diagnostics.
+5. Steps 28–30 compare results with the literature and plot the gravitational permittivity function ε(ρ).
+
+**Outputs produced** (in `out/run_YYYYMMDD_HHMMSS/`):
+- `config.txt` — full run configuration
+- `results_recap.txt` — mass statistics, β statistics, MCMC results
+- `plots/profiles/` — cumulative mass and density profile PNGs
+- `plots/mcmc/` — chain traces, autocorrelation, corner plot
+- `plots/histograms/` — 7 distribution histograms + BTFR scatter
+- `plots/mass_velocity/` — temperature vs. velocity dispersion scatter
+
+---
 
 ## Output Structure
 
@@ -246,8 +314,8 @@ out/
 - **Cesare et al. (2022)**: Gravitational permittivity in elliptical galaxies
 - **Cesare et al. (2020)**: Gravitational permittivity in disk galaxies
 - **Sohn et al. (2020)**: Galaxy cluster observations
-- **McGaugh et al.**: Baryonic Tully-Fisher Relation
-
+- **McGaugh et al. (2000)**: Baryonic Tully-Fisher Relation
+- **Matsakos and Diaferio (2016)**
 ## Notes
 
 - The analysis assumes hydrostatic equilibrium
