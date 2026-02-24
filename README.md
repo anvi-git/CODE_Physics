@@ -39,6 +39,12 @@ This Python notebook performs an analysis of galaxy clusters, investigating:
 - **Gravitational potential calculations**
 - **Testing different theoretical frameworks** (vacuum permittivity vs. density-dependent permittivity)
 
+## How to run the notebook
+
+1. Download `notebook.ipynb` and the folders `in` and `out`, placing them in the same general folder.
+2. Set your configuration parameters in the **Run Configuration** cell
+3. Run all cells sequentially
+4. 
 ## Data Sources
 
 The analysis uses data from:
@@ -213,11 +219,6 @@ pandas
 getdist      # Corner plots and posterior analysis
 ```
 
-## How to run the notebook
-
-1. Download `notebook.ipynb` and the folders `in` and `out`, placing in the same general folder.
-2. Set your configuration parameters in the **Run Configuration** cell (cell 4)
-3. Run all cells sequentially
 
 ### Example: Minimal Test Run
 
