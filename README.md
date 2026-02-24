@@ -20,9 +20,9 @@ This Python notebook performs an analysis of galaxy clusters, investigating:
 The analysis uses data from:
 - **Sohn et al. (2020)**: Galaxy cluster observations including velocity dispersion, temperature, and radius measurements
 - Two main datasets available:
-  - 99 clusters (full dataset): `dati_finali_99/`
-  - 75 clusters (purged dataset with lower temperature uncertainty): `data_75/`
-For more information on the dataset, you can consult my [thesis](Master_s_Thesis.pdf).
+  - 99 clusters (full dataset)
+  - 75 clusters (purged dataset with lower temperature uncertainty)
+For more information on the dataset you can consult my [thesis](Master_s_Thesis.pdf).
 
 ### Input Data Structure
 
