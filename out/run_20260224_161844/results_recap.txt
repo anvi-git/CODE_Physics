@@ -1,0 +1,57 @@
+======================================================================
+GALAXY CLUSTER ANALYSIS - RESULTS RECAP
+======================================================================
+Run: 20260224_161844
+Date: 2026-02-24 16:18:44
+======================================================================
+
+
+======================================================================
+MASS STATISTICS
+======================================================================
+BARYONIC MASS STATISTICS (w = 1.0):
+Number of clusters: 75
+Minimum mass: 1.1303 x 10^13 M_sun
+Maximum mass: 9.9702 x 10^13 M_sun
+Mean mass: 3.1295 x 10^13 M_sun
+Median mass: 2.5999 x 10^13 M_sun
+Mean relative uncertainty: 0.7530
+
+======================================================================
+BETA STATISTICS
+======================================================================
+BETA PARAMETER STATISTICS:
+Mean beta: 0.7989
+Min beta: 0.3310
+Max beta: 2.6942
+
+======================================================================
+MCMC RESULTS
+======================================================================
+MCMC ANALYSIS RESULTS:
+
+Chi-Squared Statistics:
+  Chi-squared value: 59.9911
+  Degrees of freedom: 72
+  Reduced chi-squared: 0.8332
+  P-value: 8.428171e-01
+
+Autocorrelation Times:
+  Parameter 0: 54.3872
+  Parameter 1: 106.1623
+  Parameter 2: 97.2715
+
+Gelman-Rubin Statistics:
+  Parameter 0: 0.999006
+  Parameter 1: 0.999006
+  Parameter 2: 0.999006
+
+Best-Fit Parameters:
+  Parameter 0: 0.031656
+  Parameter 1: -26.430779
+  Parameter 2: 1.999993
+
+Parameter Names and Mean Values:
+  ε₀ (vacuum permittivity): 0.034442
+  log₁₀(ρ_c) (critical density): -25.997893
+  Q (steepness parameter): 1.637006

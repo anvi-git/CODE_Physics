@@ -1,0 +1,18 @@
+======================================================================
+GALAXY CLUSTER ANALYSIS - RUN CONFIGURATION
+======================================================================
+Run Timestamp: 20260224_161844
+Run Date: 2026-02-24 16:18:44
+
+CONFIGURATION PARAMETERS:
+----------------------------------------------------------------------
+Number of clusters: 75.0
+Test mode: 1.0 (Production)
+DPI: 600
+Number of walkers: 500
+Number of iterations: 80000
+Number of burn-in steps: 6000
+Baryonic mass fraction (w): 1.0
+Analysis type: 1.0 (Complete gravitational permittivity)
+Number of parameters: 3.0
+======================================================================
