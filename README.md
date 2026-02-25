@@ -41,10 +41,11 @@ This Python notebook performs an analysis of galaxy clusters, investigating:
 
 ## How to run the notebook
 
-1. Download `notebook.ipynb` and the folders `in` and `out`, placing them in the same general folder.
-2. Set your configuration parameters in the **Run Configuration** cell
-3. Run all cells sequentially
-4. 
+1. Download `notebook.ipynb` and the zip file `data.zip`, which contain the folders `in` and `out`. Extract the folders and place them in the same folder as the notebook.
+2. Make sure you have the necessary [Dependencies](#dependencies) satisfied.
+3. Set your configuration parameters in the **Run Configuration** cell
+4. Run all cells sequentially
+5. 
 ## Data Sources
 
 The analysis uses data from:
